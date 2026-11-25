@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Варианты загрузочного экрана</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;700;800&display=swap" rel="stylesheet" media="print" onload="this.media='all'" />
+  <link rel="stylesheet" href="demo.css?v=1" />
+</head>
+<body>
+  <h1>Загрузочный экран: 3 варианта</h1>
+  <p class="lead">Каждый вариант повторяется сам. Нажми «Повторить», чтобы посмотреть ещё раз с начала.</p>
+
+  <section class="card" data-variant="liquid">
+    <div class="card__head"><b>1. Жидкое золото</b><span>Контур рисуется золотой линией, потом логотип заливается расплавленным золотом снизу вверх, вспышка и искры</span></div>
+    <div class="stage"></div>
+    <button class="replay">Повторить</button>
+  </section>
+
+  <section class="card" data-variant="spin">
+    <div class="card__head"><b>2. 3D-вращение</b><span>Объёмный золотой логотип влетает из глубины, крутится и замирает лицом к тебе, сзади вспыхивают лучи</span></div>
+    <div class="stage"></div>
+    <button class="replay">Повторить</button>
+  </section>
+
+  <section class="card" data-variant="particles">
+    <div class="card__head"><b>3. Сборка из золотой пыли</b><span>Сотни золотых частиц слетаются со всего экрана и складываются в логотип, потом волна света</span></div>
+    <div class="stage"></div>
+    <button class="replay">Повторить</button>
+  </section>
+
+  <script src="logo.js?v=1"></script>
+  <script src="variants.js?v=1"></script>
+  <script src="particles.js?v=1"></script>
+  <script src="demo.js?v=1"></script>
+</body>
+</html>
