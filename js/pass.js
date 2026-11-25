@@ -47,11 +47,6 @@ window.Pass = {
             </div>`).join('')}
         </div>
 
-        <div class="pass-price card card--gold">
-          <span class="muted small">Стоимость сейчас</span>
-          <b class="gold-text">$${c.price}</b>
-        </div>
-
         <div class="lesson-view__cta">
           <button class="btn" id="psBuy">Получить доступ · $${c.price}</button>
         </div>

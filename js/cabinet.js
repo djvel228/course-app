@@ -30,10 +30,24 @@ window.Cabinet = {
         ${this.item('cChat', '🔒', 'Закрытый чат · $45', 'Эфиры, таблицы, живое комьюнити')}
       </div>
 
-      <div class="section-label">Связь</div>
+      <div class="section-label">Быстрый доступ</div>
+      <div class="menu">
+        ${this.item('cHome', '🏠', 'Добавить на экран «Домой»', 'Иконка курса на телефоне, как у приложения')}
+      </div>
+
+      <div class="section-label">Помощь</div>
       <div class="menu">
         ${this.item('cAsk', '💬', 'Задать вопрос лично', 'Отвечу в Telegram')}
         ${this.item('cChannel', '📢', 'Мой Telegram-канал', '@alexeevonlyyy')}
+      </div>
+
+      <div class="section-label">Уведомления</div>
+      <div class="menu">
+        <label class="menu__item toggle-row">
+          <span class="menu__icon">🔔</span>
+          <span class="menu__body"><b>Новые материалы</b><span class="muted small">Бот напишет, когда выйдет что-то новое. На доступ к покупкам не влияет</span></span>
+          <input type="checkbox" class="toggle" id="cNotify" ${State.get().notify ? 'checked' : ''}>
+        </label>
       </div>
 
       <button class="link-btn muted small" id="cReset">Сбросить прогресс (для теста)</button>
@@ -47,6 +61,32 @@ window.Cabinet = {
     on('cAsk', () => TG.openTgLink(CONFIG.links.support));
     on('cChannel', () => TG.openTgLink(CONFIG.links.channel));
     on('cReset', () => State.reset());
+    on('cHome', () => this.addToHome());
+    this.homeStatus(el);
+    el.querySelector('#cNotify').onchange = (e) => {
+      TG.haptic('light');
+      State.get().notify = e.target.checked; // в боевом боте сохраним в базу бота
+      State.save();
+    };
+  },
+
+  // Ярлык апки на экране телефона (Telegram 8.0+)
+  addToHome() {
+    TG.haptic('light');
+    const tg = window.Telegram && Telegram.WebApp;
+    if (TG.inTelegram && tg.isVersionAtLeast('8.0') && tg.addToHomeScreen) return tg.addToHomeScreen();
+    const msg = 'Эта функция работает в свежей версии Telegram. Обнови приложение и попробуй ещё раз';
+    if (TG.inTelegram) tg.showAlert(msg); else alert(msg);
+  },
+
+  // Если ярлык уже добавлен, пишем об этом в подписи
+  homeStatus(el) {
+    const tg = window.Telegram && Telegram.WebApp;
+    if (!TG.inTelegram || !tg.isVersionAtLeast('8.0') || !tg.checkHomeScreenStatus) return;
+    tg.checkHomeScreenStatus((status) => {
+      const sub = el.querySelector('#cHome .muted');
+      if (status === 'added' && sub) sub.textContent = 'Уже на экране «Домой» ✓';
+    });
   },
 
   // На этапе интеграции кнопка откроет бота сразу на оплате USDT

@@ -12,7 +12,8 @@
     history.replaceState(null, '', location.pathname);
   }
 
-  const defaults = { welcomed: false, done: [], giftClaimed: false, read: [] };
+  // notify: true – новому человеку уведомления о новых материалах включены сразу
+  const defaults = { welcomed: false, done: [], giftClaimed: false, read: [], notify: true };
 
   function load() {
     try { return Object.assign({}, defaults, JSON.parse(localStorage.getItem(KEY))); }

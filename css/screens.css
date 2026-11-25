@@ -94,3 +94,18 @@ button { font-family: inherit; color: inherit; text-align: left; }
 .menu__icon { flex: 0 0 36px; height: 36px; border-radius: 10px; display: grid; place-items: center; background: var(--bg3); font-size: 17px; }
 .menu__body { flex: 1; display: grid; gap: 1px; }
 .menu__arrow { font-size: 18px; }
+
+/* Переключатель уведомлений */
+.toggle-row { cursor: pointer; }
+.toggle {
+  -webkit-appearance: none; appearance: none; flex: 0 0 auto;
+  position: relative; width: 50px; height: 30px; border-radius: 30px;
+  background: #333; cursor: pointer; transition: background .25s;
+}
+.toggle::after {
+  content: ''; position: absolute; top: 3px; left: 3px;
+  width: 24px; height: 24px; border-radius: 50%; background: #fff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, .35); transition: transform .25s;
+}
+.toggle:checked { background: var(--gold-metal); background-size: 250% 100%; }
+.toggle:checked::after { transform: translateX(20px); background: #141414; }
