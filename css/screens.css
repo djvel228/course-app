@@ -30,7 +30,8 @@ button { font-family: inherit; color: inherit; text-align: left; }
 .lesson.is-done .lesson__num { background: rgba(247, 215, 116, .14); color: var(--gold-2); }
 .lesson.is-done .lesson__state { color: var(--gold-2); }
 .lesson.is-locked { opacity: .5; }
-.lesson--gift.is-open { background: linear-gradient(135deg, rgba(247, 215, 116, .14), var(--bg2)); }
+.lesson--finished { cursor: default; border-color: rgba(247, 215, 116, .4); background: linear-gradient(135deg, rgba(247, 215, 116, .14), var(--bg2)); }
+.lesson--finished .lesson__num { background: var(--gold-metal); color: #1a1203; }
 
 /* ── Экран поверх вкладок ── */
 .overlay { position: fixed; inset: 0; z-index: 30; background: var(--bg); overflow-y: auto; animation: fadeUp .3s ease both; }

@@ -22,14 +22,22 @@ window.Course = {
 
       <div class="lessons">
         ${L.map((l, i) => this.lessonCard(l, i)).join('')}
-        <button class="card lesson lesson--gift ${gift ? 'is-open' : 'is-locked'}" data-gift>
+        ${gift ? `
+        <div class="card lesson lesson--finished">
+          <span class="lesson__num">✓</span>
+          <span class="lesson__body">
+            <b>Курс пройден</b>
+            <span class="muted small">Уроки можно пересматривать в любое время</span>
+          </span>
+        </div>` : `
+        <div class="card lesson is-locked">
           <span class="lesson__num">🎁</span>
           <span class="lesson__body">
-            <b>${gift ? 'Твои подарки' : 'Подарки после курса'}</b>
-            <span class="muted small">${gift ? 'Разбор кейса и база знаний' : 'Откроются после 3-го урока'}</span>
+            <b>Подарки после курса</b>
+            <span class="muted small">Откроются после 3-го урока</span>
           </span>
-          <span class="lesson__state">${gift ? '›' : '🔒'}</span>
-        </button>
+          <span class="lesson__state">🔒</span>
+        </div>`}
       </div>
     `;
 
@@ -40,7 +48,6 @@ window.Course = {
         this.openLesson(i);
       };
     });
-    el.querySelector('[data-gift]').onclick = () => { if (gift) Gift.open(); };
   },
 
   lessonCard(l, i) {
