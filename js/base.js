@@ -1,63 +1,89 @@
-// Вкладка «База»: закрыта до конца курса, потом статьи + закрытый раздел за $45.
+// Вкладка «База»: дашборд, статьи по разделам, полезные материалы.
+// Закрыта, пока не пройден курс.
 window.Base = {
   tag: 'Все',
+  section: 'articles', // articles | materials
 
   render(el) {
     if (!State.courseDone()) return this.renderLocked(el);
-    const list = CONFIG.articles.filter((a) => this.tag === 'Все' || a.tag === this.tag);
+    const A = window.ARTICLES;
+    const M = CONFIG.materials;
+    const read = State.get().read || [];
 
     el.innerHTML = `
-      <header class="page-head">
-        <div class="page-head__label gold-text">Подарок за курс</div>
-        <h1>База знаний</h1>
-        <p class="muted">${CONFIG.articles.length} статей · пополняется каждую неделю</p>
-      </header>
+      <section class="kb-hero">
+        <div class="kb-hero__shine"></div>
+        <div class="kb-hero__top">
+          <img src="img/avatar.jpg" alt="">
+          <span class="kb-hero__badge">Подарок за курс</span>
+        </div>
+        <h1>База знаний<br><span class="gold-text">OnlyFans-агентства</span></h1>
+        <p>Мой опыт без воды: трафик, продажи, управление командой</p>
+        <div class="kb-stats">
+          <div><b>${A.length}</b><span>статей</span></div>
+          <div><b>${M.length}</b><span>материалов</span></div>
+          <div><b>${read.length}</b><span>прочитано</span></div>
+        </div>
+      </section>
 
-      <div class="chips">
-        ${CONFIG.tags.map((t) => `<button class="chip ${t === this.tag ? 'is-active' : ''}" data-tag="${t}">${t}</button>`).join('')}
+      <div class="segment">
+        <button data-sec="articles" class="${this.section === 'articles' ? 'is-active' : ''}">Статьи</button>
+        <button data-sec="materials" class="${this.section === 'materials' ? 'is-active' : ''}">Материалы</button>
       </div>
 
-      <div class="articles">
-        ${list.map((a, i) => `
-          <button class="card article" data-url="${a.url}">
-            <span class="article__tag">${a.tag}</span>
-            <b>${a.title}</b>
-            <span class="article__arrow">›</span>
-          </button>`).join('')}
-      </div>
-
-      ${this.closedBlock()}
+      <div id="kbList">${this.section === 'articles' ? this.articlesHtml(A, read) : this.materialsHtml(M)}</div>
     `;
 
+    el.querySelectorAll('[data-sec]').forEach((b) => {
+      b.onclick = () => { this.section = b.dataset.sec; TG.haptic('light'); this.render(el); };
+    });
     el.querySelectorAll('[data-tag]').forEach((b) => {
       b.onclick = () => { this.tag = b.dataset.tag; TG.haptic('light'); this.render(el); };
     });
-    el.querySelectorAll('[data-url]').forEach((b) => {
-      b.onclick = () => TG.openTgLink(b.dataset.url);
+    el.querySelectorAll('[data-article]').forEach((b) => {
+      b.onclick = () => Reader.open(b.dataset.article);
     });
-    el.querySelector('#buyChat').onclick = () => Base.buyChat();
+    el.querySelectorAll('[data-material]').forEach((b) => {
+      b.onclick = () => this.openMaterial(M[+b.dataset.material]);
+    });
   },
 
-  closedBlock() {
-    const c = CONFIG.closedChat;
+  articlesHtml(A, read) {
+    const list = A.filter((a) => this.tag === 'Все' || a.tag === this.tag);
     return `
-      <section class="closed">
-        <div class="closed__head">
-          <span class="closed__lock">🔒</span>
-          <div>
-            <b>Материалы закрытого чата</b>
-            <div class="muted small">Эфиры, таблицы, разборы и живое комьюнити</div>
-          </div>
-        </div>
-        <ul class="points">${c.items.map((x) => `<li>${x}</li>`).join('')}</ul>
-        <button class="btn" id="buyChat">Получить доступ · $${c.price}</button>
-      </section>`;
+      <div class="chips">
+        ${CONFIG.tags.map((t) => `<button class="chip ${t === this.tag ? 'is-active' : ''}" data-tag="${t}">${t}</button>`).join('')}
+      </div>
+      <div class="articles">
+        ${list.length ? list.map((a) => `
+          <button class="card article" data-article="${a.id}">
+            ${a.images.length
+              ? `<span class="article__cover" style="background-image:url('${a.images[0]}')"></span>`
+              : `<span class="article__cover article__cover--empty"><span class="gold-text">${a.tag}</span></span>`}
+            <span class="article__body">
+              <span class="article__meta"><span class="article__tag">${a.tag}</span> · ${a.minutes} мин${read.includes(a.id) ? ' · <span class="article__read">прочитано ✓</span>' : ''}</span>
+              <b>${a.title}</b>
+            </span>
+          </button>`).join('') : '<p class="muted empty">В этом разделе статьи скоро появятся</p>'}
+      </div>`;
   },
 
-  // На этапе интеграции кнопка откроет бота сразу на оплате USDT
-  buyChat() {
-    TG.haptic('medium');
-    const msg = 'Оплата подключится, когда перенесём апку в основной бот';
+  materialsHtml(M) {
+    return `
+      <div class="materials">
+        ${M.map((m, i) => `
+          <button class="card material" data-material="${i}">
+            <span class="material__type material__type--${m.type.toLowerCase()}">${m.type}</span>
+            <span class="material__body"><b>${m.title}</b><span class="muted small">${m.sub}</span></span>
+            <span class="material__get">${m.file ? 'Открыть' : 'Скоро'}</span>
+          </button>`).join('')}
+      </div>`;
+  },
+
+  openMaterial(m) {
+    TG.haptic('light');
+    if (m.file) return TG.openLink(new URL(m.file, location.href).href);
+    const msg = 'Этот материал скоро появится в базе';
     if (TG.inTelegram) Telegram.WebApp.showAlert(msg); else alert(msg);
   },
 
@@ -68,7 +94,7 @@ window.Base = {
       <div class="locked">
         <div class="locked__icon">🔒</div>
         <h1>База знаний</h1>
-        <p class="muted">Все мои статьи про OnlyFans-агентство откроются в подарок, когда ты пройдёшь базовый курс</p>
+        <p class="muted">${window.ARTICLES.length} статей и ${CONFIG.materials.length} полезных материалов откроются в подарок, когда ты пройдёшь базовый курс</p>
         <div class="card progress">
           <div class="progress__row"><span>Пройдено</span><b>${done} из ${total}</b></div>
           <div class="progress__bar"><span style="width:${Math.round(done / total * 100)}%"></span></div>

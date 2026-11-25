@@ -25,15 +25,15 @@ window.Cabinet = {
 
       <div class="section-label">Обучение</div>
       <div class="menu">
-        ${this.item('cCase', '🎓', 'Разбор кейса и тарифы', 'Как ученики сделали $5 600 в первый месяц', !finished)}
-        ${this.item('cSurvey', '📝', 'Записаться на групповое обучение', 'Анкета предзаписи, свяжусь лично')}
-        ${this.item('cChat', '🔒', 'Закрытый чат · $45', 'Эфиры, таблицы, комьюнити')}
+        ${this.item('cTariffs', '🎓', 'Тарифы на обучение', 'Программа, кейсы учеников и цены')}
+        ${this.item('cSurvey', '📝', 'Записаться на обучение', 'Анкета предзаписи, свяжусь лично')}
+        ${this.item('cChat', '🔒', 'Закрытый чат · $45', 'Эфиры, таблицы, живое комьюнити')}
       </div>
 
-      <div class="section-label">Ещё</div>
+      <div class="section-label">Связь</div>
       <div class="menu">
+        ${this.item('cAsk', '💬', 'Задать вопрос лично', 'Отвечу в Telegram')}
         ${this.item('cChannel', '📢', 'Мой Telegram-канал', '@alexeevonlyyy')}
-        ${this.item('cSupport', '💬', 'Написать в поддержку', 'Ответим на любой вопрос')}
       </div>
 
       <button class="link-btn muted small" id="cReset">Сбросить прогресс (для теста)</button>
@@ -41,15 +41,19 @@ window.Cabinet = {
 
     const on = (id, fn) => { const b = el.querySelector('#' + id); if (b) b.onclick = fn; };
     on('cContinue', () => App.showTab('course'));
-    on('cCase', () => {
-      if (!finished) { TG.haptic('rigid'); return; }
-      TG.openLink(CONFIG.links.caseAndTariffs);
-    });
+    on('cTariffs', () => TG.openLink(CONFIG.links.caseAndTariffs));
     on('cSurvey', () => TG.openLink(CONFIG.links.survey));
-    on('cChat', () => Base.buyChat());
+    on('cChat', () => this.buyChat());
+    on('cAsk', () => TG.openTgLink(CONFIG.links.support));
     on('cChannel', () => TG.openTgLink(CONFIG.links.channel));
-    on('cSupport', () => TG.openTgLink(CONFIG.links.support));
     on('cReset', () => State.reset());
+  },
+
+  // На этапе интеграции кнопка откроет бота сразу на оплате USDT
+  buyChat() {
+    TG.haptic('medium');
+    const msg = 'Оплата подключится, когда перенесём апку в основной бот';
+    if (TG.inTelegram) Telegram.WebApp.showAlert(msg); else alert(msg);
   },
 
   item(id, icon, title, sub, locked) {

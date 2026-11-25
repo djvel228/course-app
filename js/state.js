@@ -6,7 +6,7 @@
   const tg = window.Telegram && window.Telegram.WebApp;
   const inTelegram = !!(tg && tg.initData);
 
-  const defaults = { welcomed: false, done: [], giftClaimed: false };
+  const defaults = { welcomed: false, done: [], giftClaimed: false, read: [] };
 
   function load() {
     try { return Object.assign({}, defaults, JSON.parse(localStorage.getItem(KEY))); }
@@ -19,6 +19,7 @@
     get: () => state,
     save() { localStorage.setItem(KEY, JSON.stringify(state)); },
     markDone(i) { if (!state.done.includes(i)) state.done.push(i); this.save(); },
+    markRead(id) { if (!state.read.includes(id)) state.read.push(id); this.save(); },
     isDone: (i) => state.done.includes(i),
     isOpen: (i) => i === 0 || state.done.includes(i - 1),
     courseDone: () => state.done.length >= window.CONFIG.lessons.length,
