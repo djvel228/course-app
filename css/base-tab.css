@@ -109,3 +109,9 @@
   color: #1a1203; background: var(--gold-metal); background-size: 250% 100%; animation: sheen 4s linear infinite;
 }
 .open-banner__link { background: none; border: 0; padding: 0; color: var(--gold-2); font: inherit; text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
+
+/* Материал под замком (для участников закрытой группы) */
+.material.is-locked .material__type { filter: grayscale(.6) brightness(.7); }
+.material.is-locked .material__body b { color: #cfcfcf; }
+.material__lock-note { font-size: 12px; font-weight: 700; color: var(--gold-2); margin-top: 2px; }
+.material.is-locked .material__get { font-size: 18px; }

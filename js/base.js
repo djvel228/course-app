@@ -89,16 +89,21 @@ window.Base = {
       ${this.openBanner()}
       <div class="materials">
         ${M.map((m, i) => `
-          <button class="card material" data-material="${i}">
+          <button class="card material ${m.locked ? 'is-locked' : ''}" data-material="${i}">
             <span class="material__type material__type--${m.type.toLowerCase()}">${m.type}</span>
-            <span class="material__body"><b>${m.title}</b><span class="muted small">${m.sub}</span></span>
-            <span class="material__get">${m.file ? 'Открыть' : 'Скоро'}</span>
+            <span class="material__body">
+              <b>${m.title}</b>
+              <span class="muted small">${m.sub}</span>
+              ${m.locked ? '<span class="material__lock-note">Доступно участникам закрытой группы</span>' : ''}
+            </span>
+            <span class="material__get">${m.locked ? '🔒' : m.file ? 'Открыть' : 'Скоро'}</span>
           </button>`).join('')}
       </div>`;
   },
 
   openMaterial(m) {
     TG.haptic('light');
+    if (m.locked) return Pass.open(); // закрытый материал – показываем, как получить доступ
     if (m.file) return TG.openLink(new URL(m.file, location.href).href);
     const msg = 'Этот материал скоро появится в базе';
     if (TG.inTelegram) Telegram.WebApp.showAlert(msg); else alert(msg);
