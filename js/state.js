@@ -6,6 +6,12 @@
   const tg = window.Telegram && window.Telegram.WebApp;
   const inTelegram = !!(tg && tg.initData);
 
+  // ?reset=1 в адресе – сбросить прогресс (для теста). Делаем ДО чтения прогресса
+  if (new URLSearchParams(location.search).get('reset') === '1') {
+    localStorage.removeItem(KEY);
+    history.replaceState(null, '', location.pathname);
+  }
+
   const defaults = { welcomed: false, done: [], giftClaimed: false, read: [] };
 
   function load() {

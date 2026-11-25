@@ -1,7 +1,7 @@
-/* Загрузочный экран и приветствие */
+/* Загрузочный экран: логотип OF заполняется жидким золотом по мере загрузки */
 .splash {
   position: fixed; inset: 0; z-index: 100;
-  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 28px;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 22px;
   background: radial-gradient(ellipse at 50% 42%, #1c1608 0%, var(--bg) 60%);
   transition: opacity .6s ease, transform .6s ease;
 }
@@ -9,57 +9,62 @@
 
 .splash__glow {
   position: absolute; top: 42%; left: 50%;
-  width: 260px; height: 260px; margin: -130px 0 0 -130px;
+  width: 280px; height: 280px; margin: -140px 0 0 -140px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(247, 215, 116, .35), transparent 65%);
+  background: radial-gradient(circle, rgba(247, 215, 116, .3), transparent 65%);
   filter: blur(10px);
-  animation: glowPulse 1.6s ease-in-out 1.2s infinite;
-  opacity: 0;
+  animation: glowPulse 1.8s ease-in-out infinite;
 }
 
-.splash__logo { width: 150px; height: 150px; animation: logoPulse 1.6s ease-in-out 1.4s infinite; }
-.splash__logo svg { width: 100%; height: 100%; overflow: visible; filter: drop-shadow(0 0 16px rgba(247, 215, 116, .45)); }
+.splash__logo { width: 170px; height: 170px; }
+.splash__logo svg { width: 100%; height: 100%; overflow: visible; filter: drop-shadow(0 0 18px rgba(247, 215, 116, .35)); }
 
-/* Логотип OF собирается из двух частей:
-   1) круг «O» выкатывается слева с поворотом
-   2) «крыло» F прилетает справа и пристыковывается
-   3) по золоту пробегает блик */
-.of-o, .of-wing { transform-box: fill-box; transform-origin: center; opacity: 0; }
-.of-o { animation: ofRoll .9s cubic-bezier(.2, .8, .25, 1) .1s forwards; }
-.of-wing {
-  filter: drop-shadow(-10px 4px 10px rgba(0, 0, 0, .5));
-  animation: ofFly .8s cubic-bezier(.3, 1.35, .45, 1) .55s forwards;
+.of-empty { opacity: .07; }
+.of-line {
+  fill: none; stroke: #F7D774; stroke-width: 4; stroke-linejoin: round;
+  stroke-dasharray: 1; stroke-dashoffset: 1;
+  filter: drop-shadow(0 0 6px #F7D774);
+  animation: draw 1s ease-in-out forwards;
 }
-.of-shine { transform: translateX(0); animation: ofShine 2.2s ease-in-out 1.3s infinite; }
+.of-line--2 { animation-delay: .25s; }
+.of-shine { transform: translateX(0); opacity: 0; }
 
-@keyframes ofRoll {
-  from { opacity: 0; transform: translateX(-160px) rotate(-300deg) scale(.7); }
-  to   { opacity: 1; transform: none; }
+/* Финал: золото долилось – вспышка, искры, блик, линия гаснет */
+.splash--done .of-line { animation: draw 0s forwards, fadeOut .5s ease forwards; }
+.splash--done .of-shine { opacity: 1; animation: shineMove 1.2s ease-in-out .15s forwards; }
+.splash--done .splash__logo { animation: logoPop .6s cubic-bezier(.3, 1.6, .5, 1); }
+
+.splash__flash {
+  position: absolute; top: 42%; left: 50%;
+  width: 280px; height: 280px; margin: -140px 0 0 -140px;
+  border-radius: 50%; opacity: 0; pointer-events: none;
+  background: radial-gradient(circle, rgba(255, 244, 210, .9), rgba(247, 215, 116, .35) 35%, transparent 70%);
 }
-@keyframes ofFly {
-  from { opacity: 0; transform: translate(170px, -90px) rotate(28deg) scale(.6); }
-  to   { opacity: 1; transform: none; }
+.splash--done .splash__flash { animation: flash .9s ease-out forwards; }
+
+.splash__sparks { position: absolute; top: 42%; left: 50%; width: 0; height: 0; }
+.splash__sparks i {
+  position: absolute; left: 0; top: 0; width: var(--s); height: var(--s); border-radius: 50%; opacity: 0;
+  background: #FFE9A8; box-shadow: 0 0 8px #F7D774;
 }
-@keyframes ofShine {
-  0%   { transform: translateX(0); }
-  55%, 100% { transform: translateX(640px); }
-}
+.splash--done .splash__sparks i { animation: spark 1s cubic-bezier(.2, .7, .3, 1) forwards; }
 
 .splash__title {
   font-size: 19px; font-weight: 800; letter-spacing: .02em;
-  opacity: 0; animation: fadeIn .7s ease .7s forwards, sheen 4s linear infinite;
+  opacity: 0; animation: fadeIn .7s ease .5s forwards, sheen 4s linear infinite;
 }
+.splash__pct { margin-top: -10px; font-size: 13px; font-weight: 700; color: var(--gold-3); font-variant-numeric: tabular-nums; letter-spacing: .05em; }
 
-.splash__bar { width: 140px; height: 3px; border-radius: 3px; background: #222; overflow: hidden; }
-.splash__bar span {
-  display: block; height: 100%; width: 0;
-  background: var(--gold-metal); background-size: 200% 100%;
-  animation: fill 2.3s ease-in-out forwards;
-}
-
+@keyframes draw { to { stroke-dashoffset: 0; } }
+@keyframes fadeOut { to { opacity: 0; } }
 @keyframes fadeIn { to { opacity: 1; } }
-@keyframes fill { to { width: 100%; } }
-@keyframes logoPulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.07); } }
+@keyframes shineMove { from { transform: translateX(0); } to { transform: translateX(640px); } }
+@keyframes logoPop { 0% { transform: scale(1); } 40% { transform: scale(1.08); } 100% { transform: scale(1); } }
+@keyframes flash { 0% { opacity: 0; transform: scale(.4); } 30% { opacity: 1; } 100% { opacity: 0; transform: scale(1.6); } }
+@keyframes spark {
+  0% { opacity: 1; transform: rotate(var(--a)) translateY(0); }
+  100% { opacity: 0; transform: rotate(var(--a)) translateY(calc(-1 * var(--d))); }
+}
 @keyframes glowPulse { 0%, 100% { opacity: .55; transform: scale(.9); } 50% { opacity: 1; transform: scale(1.1); } }
 
 /* ── Приветствие ── */

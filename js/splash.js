@@ -1,11 +1,49 @@
-// Загрузочный экран (~2.5 сек) и приветствие при первом входе.
+// Загрузочный экран и приветствие при первом входе.
 window.Splash = {
+  MIN_MS: 1800,   // заливка не быстрее этого, чтобы анимацию успели увидеть
+  MAX_MS: 7000,   // при плохом интернете дольше не держим
+  HOLD_AT: 0.9,   // пока страница не загрузилась, золото стоит на 90%
+
+  // Логотип заливается золотом = индикатор загрузки.
+  // Уровень растёт со временем, но до 100% доходит только когда
+  // загрузились шрифты, скрипты и картинки (событие load).
   run(onDone) {
     const splash = document.getElementById('splash');
+    const wave = document.getElementById('ofWave');
+    const pct = document.getElementById('splashPct');
+    const start = performance.now();
+    let ready = document.readyState === 'complete';
+    if (!ready) window.addEventListener('load', () => { ready = true; }, { once: true });
+
+    let p = 0;
+    const tick = (now) => {
+      const t = now - start;
+      const cap = ready || t > this.MAX_MS ? 1 : this.HOLD_AT;
+      const goal = Math.min(cap, Math.max(0, (t - 250) / this.MIN_MS));
+      p += (goal - p) * 0.15;              // плавно догоняем цель
+      if (goal >= 1 && p > 0.995) p = 1;
+
+      // Волна поднимается снизу (y=495 – пусто) вверх (y=155 – полный логотип)
+      // и всё время бежит вбок, чтобы золото «плескалось»
+      const y = 495 - p * 340;
+      const x = -((t * 0.12) % 200);
+      wave.setAttribute('transform', `translate(${x.toFixed(1)} ${y.toFixed(1)})`);
+      pct.textContent = Math.round(p * 100) + '%';
+
+      if (p < 1) return requestAnimationFrame(tick);
+      this.finish(splash, onDone);
+    };
+    requestAnimationFrame(tick);
+  },
+
+  // Долилось до 100%: вспышка, искры, блик – и открываем апку
+  finish(splash, onDone) {
+    splash.classList.add('splash--done');
+    TG.haptic('medium');
     setTimeout(() => {
       splash.classList.add('splash--out');
       setTimeout(() => { splash.remove(); onDone(); }, 600);
-    }, 2500);
+    }, 1000);
   },
 
   // Строки приветствия «вытекают» по очереди. Кнопка появляется последней

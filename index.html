@@ -7,18 +7,20 @@
   <script src="https://telegram.org/js/telegram-web-app.js" defer></script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" media="print" onload="this.media='all'" />
-  <link rel="stylesheet" href="css/base.css?v=4" />
-  <link rel="stylesheet" href="css/splash.css?v=4" />
-  <link rel="stylesheet" href="css/screens.css?v=4" />
-  <link rel="stylesheet" href="css/base-tab.css?v=4" />
+  <link rel="stylesheet" href="css/base.css?v=5" />
+  <link rel="stylesheet" href="css/splash.css?v=5" />
+  <link rel="stylesheet" href="css/screens.css?v=5" />
+  <link rel="stylesheet" href="css/base-tab.css?v=5" />
 </head>
 <body>
 
   <!-- Загрузочный экран -->
   <div id="splash" class="splash">
     <div class="splash__glow"></div>
+    <div class="splash__flash"></div>
     <div class="splash__logo">
-      <!-- Логотип OF: круг «O» + «крыло» F. Перерисован по картинке, координаты 640x640 -->
+      <!-- Логотип OF: круг «O» + «крыло» F. Перерисован по картинке, координаты 640x640.
+           Заливка золотом = индикатор загрузки (уровень двигает js/splash.js) -->
       <svg viewBox="70 80 500 500" aria-hidden="true">
         <defs>
           <linearGradient id="ofO" x1="0" y1="0" x2=".8" y2="1">
@@ -33,29 +35,47 @@
           </linearGradient>
           <linearGradient id="ofShine" x1="0" y1="0" x2="1" y2="0">
             <stop offset="0" stop-color="#fff" stop-opacity="0" />
-            <stop offset=".5" stop-color="#fff" stop-opacity=".75" />
+            <stop offset=".5" stop-color="#fff" stop-opacity=".8" />
             <stop offset="1" stop-color="#fff" stop-opacity="0" />
           </linearGradient>
-          <path id="ofOPath" fill-rule="evenodd"
+          <filter id="ofShadow" x="-30%" y="-30%" width="160%" height="160%">
+            <feDropShadow dx="-10" dy="4" stdDeviation="9" flood-color="#000" flood-opacity=".5" />
+          </filter>
+          <path id="ofOPath" pathLength="1" fill-rule="evenodd"
             d="M95 330 a150 150 0 1 0 300 0 a150 150 0 1 0 -300 0 Z M200 330 a45 45 0 1 0 90 0 a45 45 0 1 0 -90 0 Z" />
-          <path id="ofWingPath"
+          <path id="ofWingPath" pathLength="1"
             d="M245 480 L318 258 C328 225 345 200 378 192 C430 180 490 178 545 180 C535 230 490 282 416 292 C445 296 475 296 497 292 C485 345 440 385 382 390 A150 150 0 0 1 245 480 Z" />
           <clipPath id="ofClip">
             <use href="#ofOPath" clip-rule="evenodd" />
             <use href="#ofWingPath" />
           </clipPath>
+          <mask id="ofFill" maskUnits="userSpaceOnUse" x="0" y="0" width="800" height="800">
+            <path id="ofWave" fill="#fff" transform="translate(0 500)" d="M-200 0 q50 -24 100 0 t100 0 q50 -24 100 0 t100 0 q50 -24 100 0 t100 0 q50 -24 100 0 t100 0 q50 -24 100 0 t100 0 q50 -24 100 0 t100 0 q50 -24 100 0 t100 0 q50 -24 100 0 t100 0 q50 -24 100 0 t100 0 q50 -24 100 0 t100 0 V800 H-200 Z" />
+          </mask>
         </defs>
-        <use class="of-o" href="#ofOPath" fill="url(#ofO)" />
-        <use class="of-wing" href="#ofWingPath" fill="url(#ofWing)" />
+        <!-- Пустой «стакан»: еле заметный силуэт, который будет заполняться -->
+        <g class="of-empty">
+          <use href="#ofOPath" fill="#F7D774" />
+          <use href="#ofWingPath" fill="#F7D774" />
+        </g>
+        <!-- Золото, видимое только ниже уровня волны -->
+        <g mask="url(#ofFill)">
+          <use href="#ofOPath" fill="url(#ofO)" />
+          <use href="#ofWingPath" fill="url(#ofWing)" filter="url(#ofShadow)" />
+        </g>
+        <!-- Контур, который рисуется золотой линией -->
+        <use class="of-line" href="#ofOPath" />
+        <use class="of-line of-line--2" href="#ofWingPath" />
         <g clip-path="url(#ofClip)">
           <g transform="rotate(20 320 330)">
-            <rect class="of-shine" x="-40" y="0" width="120" height="700" fill="url(#ofShine)" />
+            <rect class="of-shine" x="-60" y="0" width="120" height="700" fill="url(#ofShine)" />
           </g>
         </g>
       </svg>
     </div>
+    <div class="splash__sparks"><i style="--a:0.0deg;--d:90px;--s:4px"></i><i style="--a:22.5deg;--d:125px;--s:5px"></i><i style="--a:45.0deg;--d:160px;--s:6px"></i><i style="--a:67.5deg;--d:90px;--s:7px"></i><i style="--a:90.0deg;--d:125px;--s:4px"></i><i style="--a:112.5deg;--d:160px;--s:5px"></i><i style="--a:135.0deg;--d:90px;--s:6px"></i><i style="--a:157.5deg;--d:125px;--s:7px"></i><i style="--a:180.0deg;--d:160px;--s:4px"></i><i style="--a:202.5deg;--d:90px;--s:5px"></i><i style="--a:225.0deg;--d:125px;--s:6px"></i><i style="--a:247.5deg;--d:160px;--s:7px"></i><i style="--a:270.0deg;--d:90px;--s:4px"></i><i style="--a:292.5deg;--d:125px;--s:5px"></i><i style="--a:315.0deg;--d:160px;--s:6px"></i><i style="--a:337.5deg;--d:90px;--s:7px"></i></div>
     <div class="splash__title gold-text">Базовый курс по OnlyFans</div>
-    <div class="splash__bar"><span></span></div>
+    <div class="splash__pct" id="splashPct">0%</div>
   </div>
 
   <!-- Приветствие (только при первом входе) -->
@@ -83,15 +103,15 @@
     </button>
   </nav>
 
-  <script src="js/config.js?v=4" defer></script>
-  <script src="js/articles.js?v=4" defer></script>
-  <script src="js/reader.js?v=4" defer></script>
-  <script src="js/state.js?v=4" defer></script>
-  <script src="js/splash.js?v=4" defer></script>
-  <script src="js/course.js?v=4" defer></script>
-  <script src="js/gift.js?v=4" defer></script>
-  <script src="js/base.js?v=4" defer></script>
-  <script src="js/cabinet.js?v=4" defer></script>
-  <script src="js/app.js?v=4" defer></script>
+  <script src="js/config.js?v=5" defer></script>
+  <script src="js/articles.js?v=5" defer></script>
+  <script src="js/reader.js?v=5" defer></script>
+  <script src="js/state.js?v=5" defer></script>
+  <script src="js/splash.js?v=5" defer></script>
+  <script src="js/course.js?v=5" defer></script>
+  <script src="js/gift.js?v=5" defer></script>
+  <script src="js/base.js?v=5" defer></script>
+  <script src="js/cabinet.js?v=5" defer></script>
+  <script src="js/app.js?v=5" defer></script>
 </body>
 </html>

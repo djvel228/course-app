@@ -29,12 +29,6 @@
     b.onclick = () => { TG.haptic('light'); showTab(b.dataset.tab); };
   });
 
-  // ?reset=1 в адресе – сбросить прогресс (для теста)
-  if (new URLSearchParams(location.search).get('reset') === '1') {
-    localStorage.clear();
-    history.replaceState(null, '', location.pathname);
-  }
-
   TG.init();
   Splash.run(() => {
     if (State.get().welcomed) {
