@@ -25,7 +25,7 @@ window.Reader = {
         <div class="reader__tag gold-text">${a.tag}</div>
         <h1 class="reader__title">${a.title}</h1>
         <div class="reader__author">
-          <img src="img/avatar.jpg" alt=""><span><b>Валерий</b><span class="muted small">OnlyFans-агентство</span></span>
+          <img src="img/avatar.jpg?v=2" alt=""><span><b>Валерий</b><span class="muted small">OnlyFans-агентство</span></span>
         </div>
         <div class="reader__body">${body}</div>
 

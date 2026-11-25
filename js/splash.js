@@ -57,7 +57,7 @@ window.Splash = {
     const d = () => `style="animation-delay:${(n++ * step).toFixed(2)}s"`;
 
     el.innerHTML = `
-      <img class="welcome__avatar flow" ${d()} src="img/avatar.jpg" alt="Валерий">
+      <img class="welcome__avatar flow" ${d()} src="img/avatar.jpg?v=2" alt="Валерий">
       <div class="welcome__label gold-text flow" ${d()}>${w.label}</div>
       <h1 class="welcome__title flow" ${d()}>${name ? `${name}, привет!<br>Это&nbsp;Валерий&nbsp;👋` : w.title}</h1>
       <p class="welcome__text flow" ${d()}>${w.text}</p>

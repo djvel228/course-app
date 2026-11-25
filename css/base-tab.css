@@ -65,3 +65,49 @@
 .reader__body i { color: #cfcfcf; }
 .reader__body a { color: var(--gold-2); }
 .reader__img { width: 100%; border-radius: 14px; margin: 4px 0 18px; display: block; }
+
+/* ── Пропуск в закрытый чат: золотая карточка ── */
+.pass {
+  position: relative; overflow: hidden; cursor: pointer;
+  margin-bottom: 18px; padding: 20px 18px;
+  border-radius: 22px; color: #1a1203;
+  background: linear-gradient(135deg, #FFF1C4 0%, #F7D774 30%, #E9B949 65%, #F9DF8E 100%);
+  box-shadow: 0 10px 30px rgba(242, 201, 76, .22), inset 0 1px 0 rgba(255, 255, 255, .7);
+}
+.pass__shine {
+  position: absolute; top: 0; left: -60%; width: 45%; height: 100%; pointer-events: none;
+  background: linear-gradient(100deg, transparent, rgba(255, 255, 255, .55), transparent);
+  animation: heroShine 4s ease-in-out infinite;
+}
+.pass__label { font-size: 12px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; opacity: .65; margin-bottom: 8px; }
+.pass__title { font-size: 27px; line-height: 1.08; font-weight: 900; letter-spacing: -.01em; margin-bottom: 10px; }
+.pass__text { font-size: 14.5px; line-height: 1.45; opacity: .82; margin-bottom: 16px; }
+.pass__more {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 12px 20px; border: 0; border-radius: 30px;
+  background: #0d0d0d; color: #F7D774; font-weight: 700; font-size: 15px; cursor: pointer;
+}
+.pass__more span { font-size: 18px; line-height: 1; }
+.pass--static { cursor: default; margin-top: 4px; }
+
+/* Экран закрытого чата */
+.pass-inside { display: grid; gap: 8px; }
+.pass-item { display: flex; gap: 12px; align-items: flex-start; }
+.pass-item__icon { flex: 0 0 40px; height: 40px; border-radius: 12px; display: grid; place-items: center; font-size: 19px; background: var(--bg3); }
+.pass-item > span:last-child { display: grid; gap: 2px; }
+.pass-price { display: flex; align-items: center; justify-content: space-between; margin-top: 16px; }
+.pass-price b { font-size: 30px; font-weight: 900; }
+
+/* Плашка «Открыто, пока подписан на канал» */
+.open-banner {
+  display: flex; align-items: center; gap: 12px;
+  margin-bottom: 12px; padding: 12px 14px;
+  border-radius: 14px; background: var(--bg2); border: 1px solid var(--border);
+  font-size: 14px; color: #e6e6e6;
+}
+.open-banner__badge {
+  flex: 0 0 auto; padding: 6px 12px; border-radius: 20px;
+  font-size: 12px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase;
+  color: #1a1203; background: var(--gold-metal); background-size: 250% 100%; animation: sheen 4s linear infinite;
+}
+.open-banner__link { background: none; border: 0; padding: 0; color: var(--gold-2); font: inherit; text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }

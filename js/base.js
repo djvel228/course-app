@@ -14,7 +14,7 @@ window.Base = {
       <section class="kb-hero">
         <div class="kb-hero__shine"></div>
         <div class="kb-hero__top">
-          <img src="img/avatar.jpg" alt="">
+          <img src="img/avatar.jpg?v=2" alt="">
           <span class="kb-hero__badge">Подарок за курс</span>
         </div>
         <h1>База знаний<br><span class="gold-text">OnlyFans-агентства</span></h1>
@@ -26,6 +26,8 @@ window.Base = {
         </div>
       </section>
 
+      ${Pass.card()}
+
       <div class="segment">
         <button data-sec="articles" class="${this.section === 'articles' ? 'is-active' : ''}">Статьи</button>
         <button data-sec="materials" class="${this.section === 'materials' ? 'is-active' : ''}">Материалы</button>
@@ -34,6 +36,9 @@ window.Base = {
       <div id="kbList">${this.section === 'articles' ? this.articlesHtml(A, read) : this.materialsHtml(M)}</div>
     `;
 
+    Pass.bind(el);
+    const ch = el.querySelector('#openChannel');
+    if (ch) ch.onclick = () => TG.openTgLink(CONFIG.links.channel);
     el.querySelectorAll('[data-sec]').forEach((b) => {
       b.onclick = () => { this.section = b.dataset.sec; TG.haptic('light'); this.render(el); };
     });
@@ -54,6 +59,7 @@ window.Base = {
       <div class="chips">
         ${CONFIG.tags.map((t) => `<button class="chip ${t === this.tag ? 'is-active' : ''}" data-tag="${t}">${t}</button>`).join('')}
       </div>
+      ${this.openBanner()}
       <div class="articles">
         ${list.length ? list.map((a) => `
           <button class="card article" data-article="${a.id}">
@@ -68,8 +74,19 @@ window.Base = {
       </div>`;
   },
 
+  // Плашка «Открыто»: база доступна подписчикам канала.
+  // Саму проверку подписки подключим при переносе в основной бот
+  openBanner() {
+    return `
+      <div class="open-banner">
+        <span class="open-banner__badge">Открыто</span>
+        <span>Доступ открыт, пока ты подписан <button class="open-banner__link" id="openChannel">на канал</button></span>
+      </div>`;
+  },
+
   materialsHtml(M) {
     return `
+      ${this.openBanner()}
       <div class="materials">
         ${M.map((m, i) => `
           <button class="card material" data-material="${i}">

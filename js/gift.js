@@ -18,7 +18,7 @@ window.Gift = {
         <div class="card card--gold gift__item flow" style="animation-delay:.9s">
           <div class="gift__num gold-text">Подарок 1</div>
           <b>Видео-разбор кейса моих учеников</b>
-          <p class="muted small">Как ребята сделали $5 600 в первый месяц. Интервью, цифры и что именно они делали по шагам</p>
+          <p class="muted small">Как ребята сделали $5&nbsp;600 в первый месяц. Интервью, цифры и что именно они делали по шагам</p>
           <button class="btn" id="gCase">Смотреть разбор</button>
         </div>
 

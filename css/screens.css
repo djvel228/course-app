@@ -35,7 +35,7 @@ button { font-family: inherit; color: inherit; text-align: left; }
 
 /* ── Экран поверх вкладок ── */
 .overlay { position: fixed; inset: 0; z-index: 30; background: var(--bg); overflow-y: auto; animation: fadeUp .3s ease both; }
-.lesson-view { padding: 12px 16px calc(110px + var(--safe-bottom)); }
+.lesson-view { padding: 12px 16px calc(150px + var(--safe-bottom)); }
 .lesson-view__top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
 .back { background: none; border: 0; color: var(--gold-2); font-weight: 600; font-size: 15px; cursor: pointer; }
 .video { position: relative; aspect-ratio: 16 / 9; border-radius: 14px; overflow: hidden; background: #000; border: 1px solid var(--border); margin-bottom: 16px; }
@@ -46,7 +46,8 @@ button { font-family: inherit; color: inherit; text-align: left; }
 .points li { display: flex; gap: 10px; color: #e4e4e4; font-size: 14px; }
 .points li::before { content: ''; flex: 0 0 6px; height: 6px; margin-top: 8px; border-radius: 50%; background: var(--gold-2); }
 .hint { margin: 14px 0; padding: 12px 14px; border-radius: 12px; font-size: 14px; font-weight: 600; background: rgba(247, 215, 116, .08); border: 1px dashed rgba(247, 215, 116, .35); }
-.lesson-view__cta { position: fixed; left: 0; right: 0; bottom: 0; padding: 12px 16px calc(14px + var(--safe-bottom)); background: linear-gradient(transparent, var(--bg) 35%); }
+/* Кнопка внизу экрана урока: сплошной фон, чтобы текст под ней не просвечивал */
+.lesson-view__cta { position: fixed; left: 0; right: 0; bottom: 0; padding: 24px 16px calc(14px + var(--safe-bottom)); background: linear-gradient(rgba(10, 10, 10, 0), var(--bg) 20px); }
 
 /* ── Подарок ── */
 .gift { position: relative; padding: 36px 18px calc(40px + var(--safe-bottom)); text-align: center; overflow: hidden; }

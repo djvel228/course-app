@@ -8,7 +8,7 @@ window.Course = {
 
     el.innerHTML = `
       <header class="hero">
-        <img class="hero__avatar" src="img/avatar.jpg" alt="">
+        <img class="hero__avatar" src="img/avatar.jpg?v=2" alt="">
         <div>
           <div class="hero__label gold-text">Базовый курс</div>
           <h1 class="hero__title">OnlyFans-агентство с&nbsp;нуля</h1>
