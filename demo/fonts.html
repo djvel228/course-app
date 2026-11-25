@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Шрифты для апки: 5 вариантов</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Unbounded:wght@500;700;800&family=Oswald:wght@500;600;700&family=Playfair+Display:wght@600;700;800&family=Manrope:wght@400;600;700;800&family=Montserrat:wght@400;600;700;800&display=swap&subset=cyrillic" rel="stylesheet" />
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: #050505; color: #fff; font-family: 'Inter', sans-serif; padding: 20px 16px 40px; }
+    .top h1 { font-size: 22px; font-weight: 800; margin-bottom: 6px; }
+    .top p { color: #9a9a9a; font-size: 14px; margin-bottom: 18px; line-height: 1.45; }
+    .card { max-width: 480px; margin-bottom: 20px; padding: 16px; border-radius: 18px; background: #111; border: 1px solid #262626; }
+    .name { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 4px; font-family: 'Inter'; }
+    .name b { font-size: 17px; color: #F7D774; }
+    .name span { font-size: 12px; color: #777; }
+    .why { font: 400 13px/1.45 'Inter'; color: #b5b5b5; margin-bottom: 14px; }
+
+    /* Макет экрана апки, шрифты подставляются из --h (заголовки) и --b (текст) */
+    .mock { padding: 16px; border-radius: 14px; background: radial-gradient(ellipse at 50% 0%, #1c1608, #0a0a0a 70%); font-family: var(--b); }
+    .label { font-family: var(--b); font-size: 12px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: #F2C94C; }
+    .title { font-family: var(--h); font-size: var(--hs, 26px); font-weight: var(--hw, 800); line-height: 1.12; margin: 4px 0 10px; letter-spacing: var(--ls, 0); text-transform: var(--tt, none); }
+    .text { font-size: 15px; line-height: 1.55; color: #d6d6d6; margin-bottom: 14px; }
+    .pass { padding: 14px; border-radius: 16px; color: #1a1203; margin-bottom: 14px;
+      background: linear-gradient(135deg, #FFF1C4 0%, #F7D774 30%, #E9B949 65%, #F9DF8E 100%); }
+    .pass small { display: block; font-size: 11px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; opacity: .6; margin-bottom: 4px; }
+    .pass b { display: block; font-family: var(--h); font-size: calc(var(--hs, 26px) * .78); font-weight: var(--hw, 800); line-height: 1.1; letter-spacing: var(--ls, 0); text-transform: var(--tt, none); }
+    .btn { display: block; width: 100%; padding: 15px; border: 0; border-radius: 14px; font-family: var(--b); font-size: 16px; font-weight: 700; color: #1a1203;
+      background: linear-gradient(100deg, #C8922A, #F7D774 25%, #FFF6D5 45%, #F7D774 60%, #E9B949 80%, #C8922A); }
+    .row { display: flex; gap: 10px; align-items: center; margin-bottom: 14px; padding: 12px; border-radius: 12px; background: #161616; border: 1px solid #262626; }
+    .row i { font-style: normal; width: 34px; height: 34px; border-radius: 10px; display: grid; place-items: center; background: #222; }
+    .row b { display: block; font-size: 15px; } .row span { font-size: 13px; color: #9a9a9a; }
+  </style>
+</head>
+<body>
+  <div class="top">
+    <h1>Шрифты: 5 вариантов</h1>
+    <p>Апка не менялась, это только демо. Сейчас в апке стоит Inter: аккуратный, но нейтральный. Ниже тот же экран в 5 шрифтах, все с поддержкой русского.</p>
+  </div>
+  <div id="list"></div>
+
+  <script>
+    const V = [
+      { n: '1. Unbounded', tag: 'заголовки + Inter', h: 'Unbounded', b: 'Inter', hs: '23px', hw: 700,
+        why: 'Широкий и современный, как у того парня с базой. Выглядит как продукт, а не как сайт' },
+      { n: '2. Oswald', tag: 'заголовки + Inter', h: 'Oswald', b: 'Inter', hs: '32px', hw: 700, tt: 'uppercase', ls: '.01em',
+        why: 'Высокий и плотный, как надписи на обложках твоих видео. Апка будет в одном стиле с YouTube' },
+      { n: '3. Playfair Display', tag: 'заголовки + Inter', h: 'Playfair Display', b: 'Inter', hs: '29px', hw: 700,
+        why: 'Классика с засечками, как у люксовых брендов. С золотом даёт ощущение «дорого»' },
+      { n: '4. Manrope', tag: 'всё приложение', h: 'Manrope', b: 'Manrope', hs: '27px', hw: 800,
+        why: 'Мягкий и округлый, современнее Inter. Самый спокойный вариант, читается легко' },
+      { n: '5. Montserrat', tag: 'всё приложение', h: 'Montserrat', b: 'Montserrat', hs: '25px', hw: 800,
+        why: 'Геометричный и уверенный, частый выбор у премиальных онлайн-школ' },
+    ];
+    document.getElementById('list').innerHTML = V.map((v) => `
+      <section class="card">
+        <div class="name"><b>${v.n}</b><span>${v.tag}</span></div>
+        <p class="why">${v.why}</p>
+        <div class="mock" style="--h:'${v.h}';--b:'${v.b}';--hs:${v.hs};--hw:${v.hw};--tt:${v.tt || 'none'};--ls:${v.ls || '0'}">
+          <div class="label">Базовый курс</div>
+          <div class="title">OnlyFans-агентство с нуля</div>
+          <p class="text">За 3 коротких урока расскажу про изнанку бизнеса и покажу, как прийти к $10&nbsp;000 в месяц.</p>
+          <div class="pass"><small>Пропуск</small><b>Закрытый чат OnlyFans-агентства</b></div>
+          <div class="row"><i>💬</i><div><b>Задать вопрос лично</b><span>Отвечу в Telegram</span></div></div>
+          <button class="btn">Смотреть первый урок →</button>
+        </div>
+      </section>`).join('');
+  </script>
+</body>
+</html>
