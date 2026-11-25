@@ -1,0 +1,117 @@
+/* Базовые стили: цвета, шрифт, золото, кнопки, нижнее меню */
+:root {
+  --bg: #0a0a0a;
+  --bg2: #121212;
+  --bg3: #1a1a1a;
+  --border: #262626;
+  --text: #ffffff;
+  --muted: #9a9a9a;
+  --radius: 16px;
+  /* Яркое металлическое золото (на сайте было тусклое #b8873f) */
+  --gold-1: #FFF6D5;
+  --gold-2: #F7D774;
+  --gold-3: #E9B949;
+  --gold-4: #C8922A;
+  --gold: #F2C94C;
+  --gold-metal: linear-gradient(100deg, #C8922A 0%, #F7D774 25%, #FFF6D5 45%, #F7D774 60%, #E9B949 80%, #C8922A 100%);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+html, body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-size: 15px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+[hidden] { display: none !important; }
+
+/* Золотой текст с бегущим бликом */
+.gold-text {
+  background: var(--gold-metal);
+  background-size: 250% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: sheen 4s linear infinite;
+}
+
+@keyframes sheen {
+  from { background-position: 100% 0; }
+  to   { background-position: -150% 0; }
+}
+
+/* Главная золотая кнопка */
+.btn {
+  position: relative;
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  width: 100%;
+  padding: 16px 20px;
+  border: 0; border-radius: 14px;
+  font: 700 16px/1.2 'Inter', sans-serif;
+  color: #1a1203;
+  background: var(--gold-metal);
+  background-size: 250% 100%;
+  animation: sheen 4s linear infinite;
+  box-shadow: 0 6px 24px rgba(242, 201, 76, .28), inset 0 1px 0 rgba(255, 255, 255, .6);
+  cursor: pointer;
+  overflow: hidden;
+  transition: transform .15s, opacity .2s;
+}
+.btn:active { transform: scale(.97); }
+.btn:disabled { opacity: .45; cursor: default; animation: none; box-shadow: none; }
+
+.btn--ghost {
+  color: var(--gold-2);
+  background: transparent;
+  border: 1px solid rgba(247, 215, 116, .35);
+  box-shadow: none;
+  animation: none;
+}
+
+/* Карточка */
+.card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px;
+}
+.card--gold { border-color: rgba(247, 215, 116, .4); box-shadow: 0 0 30px rgba(242, 201, 76, .08); }
+
+.muted { color: var(--muted); }
+.small { font-size: 13px; }
+
+/* Нижнее меню вкладок */
+.app { padding: 16px 16px calc(96px + var(--safe-bottom)); min-height: 100vh; }
+
+.tabbar {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 20;
+  display: flex;
+  padding: 8px 8px calc(8px + var(--safe-bottom));
+  background: rgba(10, 10, 10, .92);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-top: 1px solid var(--border);
+}
+.tabbar button {
+  flex: 1;
+  display: flex; flex-direction: column; align-items: center; gap: 3px;
+  padding: 6px 0;
+  background: none; border: 0;
+  color: var(--muted);
+  font: 600 11px 'Inter', sans-serif;
+  cursor: pointer;
+}
+.tabbar svg { width: 22px; height: 22px; stroke: currentColor; fill: none; stroke-width: 1.8; }
+.tabbar button.is-active { color: var(--gold-2); }
+
+/* Плавное появление вкладки */
+.tab { animation: fadeUp .35s ease both; }
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: none; }
+}

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover" />
+  <title>Базовый курс по OnlyFans</title>
+  <script src="https://telegram.org/js/telegram-web-app.js" defer></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" media="print" onload="this.media='all'" />
+  <link rel="stylesheet" href="css/base.css?v=1" />
+  <link rel="stylesheet" href="css/splash.css?v=1" />
+  <link rel="stylesheet" href="css/screens.css?v=1" />
+</head>
+<body>
+
+  <!-- Загрузочный экран -->
+  <div id="splash" class="splash">
+    <div class="splash__glow"></div>
+    <div class="splash__logo">
+      <svg viewBox="0 0 120 120" aria-hidden="true">
+        <defs>
+          <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#FFF6D5" />
+            <stop offset=".35" stop-color="#F7D774" />
+            <stop offset=".65" stop-color="#E9B949" />
+            <stop offset="1" stop-color="#FFE9A8" />
+          </linearGradient>
+        </defs>
+        <circle class="splash__ring" cx="60" cy="60" r="56" />
+        <path class="splash__heart" d="M60 96 C30 76 16 58 22 40 C28 22 50 20 60 38 C70 20 92 22 98 40 C104 58 90 76 60 96 Z" />
+        <circle class="splash__dot" cx="60" cy="56" r="9" />
+      </svg>
+    </div>
+    <div class="splash__title gold-text">Базовый курс по OnlyFans</div>
+    <div class="splash__bar"><span></span></div>
+  </div>
+
+  <!-- Приветствие (только при первом входе) -->
+  <div id="welcome" class="welcome" hidden></div>
+
+  <!-- Основное приложение -->
+  <main id="app" class="app" hidden>
+    <section id="tab-course" class="tab"></section>
+    <section id="tab-base" class="tab" hidden></section>
+    <section id="tab-cabinet" class="tab" hidden></section>
+  </main>
+
+  <!-- Экран урока / подарка поверх вкладок -->
+  <div id="overlay" class="overlay" hidden></div>
+
+  <nav id="tabbar" class="tabbar" hidden>
+    <button data-tab="course" class="is-active">
+      <svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M10 9.5v5l4.5-2.5z"/></svg>Курс
+    </button>
+    <button data-tab="base">
+      <svg viewBox="0 0 24 24"><path d="M4 5.5A1.5 1.5 0 0 1 5.5 4H11v16H5.5A1.5 1.5 0 0 1 4 18.5zM13 4h5.5A1.5 1.5 0 0 1 20 5.5v13a1.5 1.5 0 0 1-1.5 1.5H13z"/></svg>База
+    </button>
+    <button data-tab="cabinet">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="8.5" r="3.5"/><path d="M5 20c1.2-3.6 4-5.5 7-5.5s5.8 1.9 7 5.5"/></svg>Кабинет
+    </button>
+  </nav>
+
+  <script src="js/config.js?v=1" defer></script>
+  <script src="js/state.js?v=1" defer></script>
+  <script src="js/splash.js?v=1" defer></script>
+  <script src="js/course.js?v=1" defer></script>
+  <script src="js/gift.js?v=1" defer></script>
+  <script src="js/base.js?v=1" defer></script>
+  <script src="js/cabinet.js?v=1" defer></script>
+  <script src="js/app.js?v=1" defer></script>
+</body>
+</html>
