@@ -25,7 +25,7 @@ window.Gift = {
         <div class="card gift__item flow" style="animation-delay:1.2s">
           <div class="gift__num gold-text">Подарок 2</div>
           <b>Открыта база знаний</b>
-          <p class="muted small">Все мои статьи про OnlyFans-агентство: рынок, трафик, запуск, команда</p>
+          <p class="muted small">Все мои статьи про OnlyFans-агентство: рынок, трафик, запуск и многое другое</p>
           <button class="btn btn--ghost" id="gBase">Открыть базу</button>
         </div>
 

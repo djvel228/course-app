@@ -2,8 +2,8 @@
 window.Cabinet = {
   render(el) {
     const u = TG.user;
-    const name = u ? [u.first_name, u.last_name].filter(Boolean).join(' ') : 'Гость';
-    const photo = u && u.photo_url;
+    const name = esc(u ? [u.first_name, u.last_name].filter(Boolean).join(' ') : 'Гость');
+    const photo = u && u.photo_url && esc(u.photo_url);
     const done = State.get().done.length;
     const total = CONFIG.lessons.length;
     const finished = State.courseDone();

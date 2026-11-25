@@ -13,7 +13,7 @@ window.Splash = {
   showWelcome(onStart) {
     const w = CONFIG.welcome;
     const el = document.getElementById('welcome');
-    const name = TG.user && TG.user.first_name;
+    const name = TG.user && esc(TG.user.first_name);
     const step = 0.55; // секунды между строками
     let n = 0;
     const d = () => `style="animation-delay:${(n++ * step).toFixed(2)}s"`;
@@ -21,7 +21,7 @@ window.Splash = {
     el.innerHTML = `
       <img class="welcome__avatar flow" ${d()} src="img/avatar.jpg" alt="Валерий">
       <div class="welcome__label gold-text flow" ${d()}>${w.label}</div>
-      <h1 class="welcome__title flow" ${d()}>${name ? `${name}, привет!<br>Это Валерий 👋` : w.title}</h1>
+      <h1 class="welcome__title flow" ${d()}>${name ? `${name}, привет!<br>Это&nbsp;Валерий&nbsp;👋` : w.title}</h1>
       <p class="welcome__text flow" ${d()}>${w.text}</p>
       <ul class="welcome__list">
         ${w.points.map((p) => `<li class="flow" ${d()}>${p}</li>`).join('')}

@@ -11,7 +11,7 @@ window.Course = {
         <img class="hero__avatar" src="img/avatar.jpg" alt="">
         <div>
           <div class="hero__label gold-text">Базовый курс</div>
-          <h1 class="hero__title">OnlyFans-агентство с нуля</h1>
+          <h1 class="hero__title">OnlyFans-агентство с&nbsp;нуля</h1>
         </div>
       </header>
 

@@ -14,7 +14,7 @@ window.CONFIG = {
 
   welcome: {
     label: 'Базовый курс по OnlyFans',
-    title: 'Привет, это Валерий 👋',
+    title: 'Привет, это&nbsp;Валерий&nbsp;👋',
     text: 'За 3 коротких урока я кратко и ёмко:',
     points: [
       'Расскажу про изнанку бизнеса на OnlyFans',
@@ -27,7 +27,7 @@ window.CONFIG = {
 
   lessons: [
     {
-      title: 'Изнанка бизнеса на OnlyFans',
+      title: 'Что такое OnlyFans и как тут зарабатывать',
       youtube: 'PsHypEXKDXA',
       points: [
         '3 вида заработка на OnlyFans',
@@ -37,7 +37,7 @@ window.CONFIG = {
       ],
     },
     {
-      title: 'Путь к $10 000 в месяц',
+      title: 'Как запустить своё OnlyFans-агентство: пошаговый план',
       youtube: 'AI1HRpxXM0s',
       points: [
         'Конкретные действия, чтобы выйти на $10 000+/мес',
@@ -48,7 +48,7 @@ window.CONFIG = {
       ],
     },
     {
-      title: '4 ошибки новичков и кейс на $5 000',
+      title: 'Подводные камни OnlyFans и разбор кейса',
       youtube: 'EwN9buPVSSs',
       points: [
         '4 ошибки, которые сливают деньги и время на старте. Их совершают почти все новички',

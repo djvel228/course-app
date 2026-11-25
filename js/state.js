@@ -25,6 +25,9 @@
     reset() { localStorage.removeItem(KEY); location.reload(); },
   };
 
+  // Экранирование текста от пользователя (имя из Telegram) перед вставкой в HTML
+  window.esc = (t) => String(t).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+
   window.TG = {
     inTelegram,
     user: (tg && tg.initDataUnsafe && tg.initDataUnsafe.user) || null,
